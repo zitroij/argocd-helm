@@ -154,7 +154,7 @@ Edit the application files in the `argocd/environments/` directory and update th
 
 ```bash
 # Update all environments
-find argocd/environments -name "application.yaml" -exec sed -i '' 's|https://github.ibm.com/jortiz/argocd-helm.git|https://github.ibm.com/jortiz/argocd-helm.git|g' {} \;
+find argocd/environments -name "application.yaml" -exec sed -i '' 's|https://github.com/zitroij/argocd-helm.git|https://github.com/zitroij/argocd-helm.git|g' {} \;
 
 # Or update individually
 vi argocd/environments/dev/application.yaml
@@ -261,7 +261,7 @@ spec:
   project: default
   
   source:
-    repoURL: https://github.ibm.com/jortiz/argocd-helm.git
+    repoURL: https://github.com/zitroij/argocd-helm.git
     targetRevision: develop
     path: .
     

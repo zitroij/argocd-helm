@@ -13,7 +13,7 @@ spec:
   # Source configuration - where your Helm chart is located
   source:
     # Git repository URL
-    repoURL: https://github.ibm.com/jortiz/argocd-helm.git
+    repoURL: https://github.com/zitroij/argocd-helm.git
     targetRevision: HEAD  # Use HEAD for compatibility with any default branch
     path: .
     

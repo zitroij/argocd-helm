@@ -30,7 +30,7 @@ spec:
       project: default
       
       source:
-        repoURL: https://github.ibm.com/jortiz/argocd-helm.git
+        repoURL: https://github.com/zitroij/argocd-helm.git
         targetRevision: HEAD  # Use HEAD for compatibility with any default branch
         path: .
         

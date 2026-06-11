@@ -104,7 +104,7 @@ Edit each application file and update the `repoURL`:
 
 ```bash
 # Update all environments
-find environments -name "application.yaml" -exec sed -i '' 's|https://github.ibm.com/jortiz/argocd-helm.git|https://github.ibm.com/jortiz/argocd-helm.git|g' {} \;
+find environments -name "application.yaml" -exec sed -i '' 's|https://github.com/zitroij/argocd-helm.git|https://github.com/zitroij/argocd-helm.git|g' {} \;
 
 # Or update individually
 vi environments/dev/application.yaml
@@ -219,7 +219,7 @@ oc get application sample-app-dev -n openshift-gitops -o jsonpath='{.status.cond
 argocd repo list
 
 # Add repository credentials (if private)
-argocd repo add https://github.ibm.com/jortiz/argocd-helm.git \
+argocd repo add https://github.com/zitroij/argocd-helm.git \
   --username your-username \
   --password your-token
 ```
