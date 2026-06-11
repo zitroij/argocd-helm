@@ -1,0 +1,15 @@
+apiVersion: v2
+name: sample-app
+description: A simple Helm chart for demonstrating ArgoCD integration
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - argocd
+  - gitops
+  - demo
+maintainers:
+  - name: DevOps Team
+    email: devops@example.com
+
+# Made with Bob

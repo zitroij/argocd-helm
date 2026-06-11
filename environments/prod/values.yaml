@@ -1,0 +1,40 @@
+# Production environment configuration
+replicaCount: 3
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "1.21"
+
+service:
+  type: ClusterIP
+  port: 80
+
+configMaps:
+  app-config:
+    data:
+      APP_NAME: "sample-application"
+      APP_ENV: "production"
+      LOG_LEVEL: "info"
+  
+  database-config:
+    data:
+      DB_HOST: "postgres.default.svc.cluster.local"
+      DB_PORT: "5432"
+      DB_NAME: "appdb"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Made with Bob

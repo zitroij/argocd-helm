@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sample-app-environments
+  namespace: openshift-gitops
+spec:
+  generators:
+    # List generator - define multiple environments
+    - list:
+        elements:
+          - env: dev
+            namespace: sample-app-dev
+            valuesFile: environments/dev/values.yaml
+          
+          - env: staging
+            namespace: sample-app-staging
+            valuesFile: environments/staging/values.yaml
+          
+          - env: prod
+            namespace: sample-app-prod
+            valuesFile: environments/prod/values.yaml
+  
+  template:
+    metadata:
+      name: 'sample-app-{{env}}'
+      labels:
+        environment: '{{env}}'
+    
+    spec:
+      project: default
+      
+      source:
+        repoURL: https://github.ibm.com/jortiz/argocd-helm.git
+        targetRevision: HEAD  # Use HEAD for compatibility with any default branch
+        path: .
+        
+        helm:
+          valueFiles:
+            - '{{valuesFile}}'
+      
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+        
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+
+# Made with Bob

@@ -1,0 +1,15 @@
+{{- range $name, $config := .Values.configMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sample-app.fullname" $ }}-{{ $name }}
+  labels:
+    {{- include "sample-app.labels" $ | nindent 4 }}
+data:
+  {{- range $key, $value := $config.data }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}
+
+# Made with Bob

@@ -1,0 +1,40 @@
+# Development environment configuration
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+configMaps:
+  app-config:
+    data:
+      APP_NAME: "sample-application"
+      APP_ENV: "development"
+      LOG_LEVEL: "debug"
+  
+  database-config:
+    data:
+      DB_HOST: "postgres-dev.default.svc.cluster.local"
+      DB_PORT: "5432"
+      DB_NAME: "appdb_dev"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Made with Bob

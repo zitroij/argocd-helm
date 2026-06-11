@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app-dev
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    environment: dev
+spec:
+  project: default
+  
+  # Source configuration - where your Helm chart is located
+  source:
+    # Git repository URL
+    repoURL: https://github.ibm.com/jortiz/argocd-helm.git
+    targetRevision: HEAD  # Use HEAD for compatibility with any default branch
+    path: .
+    
+    # Helm specific configuration
+    helm:
+      # Values file to use from the dev environment directory
+      valueFiles:
+        - environments/dev/values.yaml
+  
+  # Destination cluster and namespace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sample-app-dev
+  
+  # Sync policy
+  syncPolicy:
+    # Automated sync configuration
+    automated:
+      prune: true      # Delete resources that are no longer in Git
+      selfHeal: true   # Automatically sync when cluster state differs from Git
+      allowEmpty: false
+    
+    # Sync options
+    syncOptions:
+      - CreateNamespace=true  # Create namespace if it doesn't exist
+      - PruneLast=true        # Prune resources as last step
+      - RespectIgnoreDifferences=true
+    
+    # Retry configuration
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
